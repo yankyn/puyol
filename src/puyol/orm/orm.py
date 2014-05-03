@@ -12,7 +12,7 @@ class Country(Base, AlchemyBase):
     id = Column(Integer, primary_key=True)
     name = Column(String, name='name2')
 
-    universities = relationship('University', backref="country")
+    universities = relationship('University')
 
 
 class University(Base, AlchemyBase):
@@ -21,6 +21,8 @@ class University(Base, AlchemyBase):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     country_id = Column(ForeignKey(Country.id))
+
+    country = relationship('Country', uselist=False)
 
 
 class Student(Base, AlchemyBase):
