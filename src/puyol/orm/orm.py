@@ -1,4 +1,5 @@
 from sqlalchemy import Integer, Column, String
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
 from puyol.orm.base import AlchemyBase, Base
 
@@ -9,7 +10,9 @@ class Country(Base, AlchemyBase):
     __tablename__ = 'countries'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(String, name='name2')
+
+    universities = relationship('University', backref="country")
 
 
 class University(Base, AlchemyBase):
