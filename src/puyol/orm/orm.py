@@ -14,6 +14,10 @@ class Country(Base, AlchemyBase):
 
     universities = relationship('University')
 
+    @property
+    def name_and_id(self):
+        return self.name, self.id
+
 
 class University(Base, AlchemyBase):
     __tablename__ = 'universities'
