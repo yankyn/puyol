@@ -1,4 +1,5 @@
 from sqlalchemy import Integer, Column, String
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
 from puyol.orm.base import AlchemyBase, Base
 
@@ -11,6 +12,11 @@ class Country(Base, AlchemyBase):
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
+    universities = relationship('University')
+
+    def foo(self):
+        pass
+
 
 class University(Base, AlchemyBase):
     __tablename__ = 'universities'
@@ -18,6 +24,9 @@ class University(Base, AlchemyBase):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     country_id = Column(ForeignKey(Country.id))
+
+    country = relationship('Country', uselist=False)
+    courses = relationship('Course')
 
 
 class Student(Base, AlchemyBase):
@@ -33,6 +42,8 @@ class Course(Base, AlchemyBase):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     university_id = Column(ForeignKey(University.id))
+
+    university = relationship('University')
 
 
 class StudentCourseRelations(Base, AlchemyBase):
