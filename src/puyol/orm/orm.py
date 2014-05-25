@@ -10,12 +10,17 @@ class Country(Base, AlchemyBase):
     __tablename__ = 'countries'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(String, name='name2')
 
     universities = relationship('University')
 
     def foo(self):
         pass
+
+
+    @property
+    def name_and_id(self):
+        return self.name, self.id
 
 
 class University(Base, AlchemyBase):
@@ -25,6 +30,7 @@ class University(Base, AlchemyBase):
     name = Column(String)
     country_id = Column(ForeignKey(Country.id))
 
+    country = relationship('Country', uselist=False)
     country = relationship('Country', uselist=False)
     courses = relationship('Course')
 

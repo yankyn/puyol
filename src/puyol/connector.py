@@ -37,13 +37,13 @@ def disconnect():
     is_connected = False
 
 
-def connect(db=None):
+def connect(db=None, debug=False):
     global session, engine, is_connected
     if not is_connected:
         if not db:
             # Not currently used.
             db = DB_PATH
-        engine = create_engine('sqlite://')
+        engine = create_engine('sqlite://', echo=debug)
         session_factory = sessionmaker(bind=engine)
         session = session_factory()
         AlchemyBase.metadata.create_all(engine)
