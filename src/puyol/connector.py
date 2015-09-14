@@ -1,7 +1,6 @@
 from sqlalchemy import event
 from sqlalchemy.engine import create_engine
 from sqlalchemy.orm import sessionmaker, mapper
-import puyol
 from puyol.orm.base import AlchemyBase
 
 __author__ = 'USER'
@@ -24,7 +23,7 @@ is_connected = None
 
 
 @event.listens_for(mapper, 'init')
-def auto_add(target, args, kwargs):
+def auto_add(target, *args, **kwargs):
     global session
     session.add(target)
 
@@ -37,12 +36,9 @@ def disconnect():
     is_connected = False
 
 
-def connect(db=None, debug=False):
+def connect(debug=False):
     global session, engine, is_connected
     if not is_connected:
-        if not db:
-            # Not currently used.
-            db = DB_PATH
         engine = create_engine('sqlite://', echo=debug)
         session_factory = sessionmaker(bind=engine)
         session = session_factory()
