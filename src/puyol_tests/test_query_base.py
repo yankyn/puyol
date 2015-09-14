@@ -2,8 +2,6 @@ import pytest
 import puyol
 from puyol.connector import NotConnectedException
 from puyol.orm.query import PuyolQuery
-from fixtures.db_fixtures import *
-from fixtures.general_fixtures import *
 
 __author__ = 'USER'
 
@@ -43,37 +41,44 @@ def test_query_refines_criterion_negative(db, country):
 
 
 def test_query_refines_criteria_negative_1(db, country):
-    qu = puyol.Country.get(puyol.Country.name == country.name, puyol.Country.id == country.id + 1)
+    qu = puyol.Country.get(puyol.Country.name == country.name,
+                           puyol.Country.id == country.id + 1)
     assert not get_first_from_query(qu)
 
 
 def test_query_refines_criteria_negative_2(db, country):
-    qu = puyol.Country.get(puyol.Country.name == 'not' + country.name, puyol.Country.id == country.id)
+    qu = puyol.Country.get(puyol.Country.name == 'not' + country.name,
+                           puyol.Country.id == country.id)
     assert not get_first_from_query(qu)
 
 
 def test_query_refines_criteria_positive(db, country):
-    qu = puyol.Country.get(country.name == country.name, puyol.Country.id == country.id)
+    qu = puyol.Country.get(country.name == country.name,
+                           puyol.Country.id == country.id)
     assert get_first_from_query(qu) == country
 
 
 def test_query_refines_criterion_and_kwarg_negative_1(db, country):
-    qu = puyol.Country.get(puyol.Country.name == country.name, id=country.id + 1)
+    qu = puyol.Country.get(puyol.Country.name == country.name,
+                           id=country.id + 1)
     assert not get_first_from_query(qu)
 
 
 def test_query_refines_criterion_and_kwarg_negative_2(db, country):
-    qu = puyol.Country.get(puyol.Country.name == 'not' + country.name, id=country.id)
+    qu = puyol.Country.get(puyol.Country.name == 'not' + country.name,
+                           id=country.id)
     assert not get_first_from_query(qu)
 
 
 def test_query_refines_criterion_and_kwarg_negative_3(db, country):
-    qu = puyol.Country.get(puyol.Country.id == country.id + 1, name=country.name)
+    qu = puyol.Country.get(puyol.Country.id == country.id + 1,
+                           name=country.name)
     assert not get_first_from_query(qu)
 
 
 def test_query_refines_criterion_and_kwarg_negative_4(db, country):
-    qu = puyol.Country.get(puyol.Country.id == country.id, name='not' + country.name)
+    qu = puyol.Country.get(puyol.Country.id == country.id,
+                           name='not' + country.name)
     assert not get_first_from_query(qu)
 
 

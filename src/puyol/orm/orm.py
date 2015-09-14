@@ -16,10 +16,14 @@ def make_criteria_from_kwargs(comparator, kwargs):
 
 class EachComparator(RelationshipProperty.Comparator):
     def each(self, criterion=None, **kwargs):
+        """
+        True if all items in the relationship match the criterion/kwargs,
+        and not because it's empty.
+        """
         clauses = make_criteria_from_kwargs(self, kwargs)
         clauses = clauses + [criterion] if criterion is not None else clauses
         return (~self.any(~and_(*clauses))) & (
-            self.any(and_(*clauses))) if clauses else self.any()
+            self.any()) if clauses else self.any()
 
 
 class Country(Base, AlchemyBase):
